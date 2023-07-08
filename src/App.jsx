@@ -11,6 +11,7 @@ function App() {
   const [isShow, setIsShow] = useState(false);
   const [data, setData] = useState();
   const [range, setRange] = useState([0, 100]);
+  const [imgurl, setImgUrl] = useState("http://127.0.0.1:8000/frame");
 
   return (
     <>
@@ -55,25 +56,31 @@ function App() {
               </Button>
               <Button onClick={
                   () => {
+                      if(!isShow){
+                        setImgUrl("http://127.0.0.1:8000/frame" + '?' + Math.random());
+                        fetch("http://127.0.0.1:8000/start_sample")
+                      }else{
+                        fetch("http://127.0.0.1:8000/stop_sample")
+                      }
                       setIsShow(!isShow);
                   }
               }>
-                  show the image
+                  {!isShow ? "start sample" : "stop sample"}
               </Button>
               <Button onClick={
-                  () => {
-                    const url = 'http://127.0.0.1:8000/get_projection/?x1=' + range[0] + '&x2=' + range[1];
-                    fetch(url)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        console.log(data);
-                        setData(data);
-                    })
-                    .catch((err) => {
-                        console.log(err.message);
-                    });
-                  }
-                }> 
+                () => {
+                  const url = 'http://127.0.0.1:8000/get_projection/?x1=' + range[0] + '&x2=' + range[1];
+                  fetch(url)
+                  .then((response) => response.json())
+                  .then((data) => {
+                      console.log(data);
+                      setData(data);
+                  })
+                  .catch((err) => {
+                      console.log(err.message);
+                  });
+                }
+              }> 
                 get range axis data
               </Button>
             </Space>
@@ -89,7 +96,7 @@ function App() {
                   }/>
                 </div>
                 <div>
-                  <img src="http://127.0.0.1:8000/frame" className="logo" alt="Vite logo"/> 
+                  <img src={imgurl} className="logo" alt="Vite logo"/> 
                 </div>
               </div>
             :
