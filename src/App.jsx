@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import PlotFigure from './Axis'
 import Select from 'react-select';
-import { Slider, Space, Button, Input } from 'antd';
+import { Slider, Space, Button, Input, Avatar } from 'antd';
 import Config from './Config';
 
 function App() {
@@ -34,7 +34,10 @@ function App() {
 
   return (
     <>
-      <h3>Camera</h3>
+      <Space>
+        <Avatar src="/CLAPA.png" />
+        <h3>CLAPA-OPTICS Camera software</h3>
+      </Space>
       <div className='wrapper'>
         <Config />
       </div>
@@ -48,7 +51,7 @@ function App() {
                       setIsOpen(true);
                       // 通过事件监听页面关闭或刷新
                       window.addEventListener('beforeunload', (event) => {
-                          fetch('http://127.0.0.1:8000/stop');
+                          fetch('http://127.0.0.1:8000/close');
                           event.returnValue = '';
                       });
                   }
