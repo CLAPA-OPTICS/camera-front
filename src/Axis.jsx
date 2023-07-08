@@ -1,6 +1,6 @@
-import * as Plot from "@observablehq/plot";
-import {useEffect, useRef} from "react";
 import './App.css';
+import {useEffect, useRef} from "react";
+import * as Plot from "@observablehq/plot";
 
 function PlotFigure(props) {
   const containerRef = useRef();
