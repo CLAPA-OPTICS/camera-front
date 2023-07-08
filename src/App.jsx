@@ -20,6 +20,7 @@ function App() {
   };
   const [k2, setK2] = useState(1.414);
   const [isOpen, setIsOpen] = useState(false);
+  const [isShow, setIsShow] = useState(false);
   const [res, setRes] = useState(0);
   const [data, setData] = useState();
   const [arr, setArr] = useState([0, 1, 2, 3]);
@@ -41,35 +42,57 @@ function App() {
         <div className='box1'>
           <div>
             <Space>
-              <Button onClick={
-                () => {
-                  const url = 'http://127.0.0.1:8000/get_projection/?x1=' + range[0] + '&x2=' + range[1];
-                  fetch(url)
-                  .then((response) => response.json())
-                  .then((data) => {
-                      console.log(data);
-                      setData(data);
-                  })
-                  .catch((err) => {
-                      console.log(err.message);
-                  });
-                }
-              }> 
-                get range axis data
+              <Button disabled={isOpen} onClick={
+                  () => {
+                      fetch('http://127.0.0.1:8000/start');
+                      setIsOpen(true);
+                      // 通过事件监听页面关闭或刷新
+                      window.addEventListener('beforeunload', (event) => {
+                          fetch('http://127.0.0.1:8000/stop');
+                          event.returnValue = '';
+                      });
+                  }
+              }>
+                  click to start
+              </Button>
+              <Button disabled={!isOpen} onClick={
+                  () => {
+                      fetch('http://127.0.0.1:8000/close');
+                      setIsOpen(false);
+                      setIsShow(false);
+                  }
+              }>
+                  click to close
               </Button>
               <Button onClick={
-                () => {
-                  setIsOpen(!isOpen);
-                }
+                  () => {
+                      setIsShow(!isShow);
+                  }
               }>
-                Show the image/Close the image
+                  show the image
+              </Button>
+              <Button onClick={
+                  () => {
+                    const url = 'http://127.0.0.1:8000/get_projection/?x1=' + range[0] + '&x2=' + range[1];
+                    fetch(url)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data);
+                        setData(data);
+                    })
+                    .catch((err) => {
+                        console.log(err.message);
+                    });
+                  }
+                }> 
+                get range axis data
               </Button>
             </Space>
           </div>
           {
-            isOpen ? 
+            isShow ? 
               <div className='two_raw'>
-                <div>
+                <div style={{padding: '1rem', height: '20rem'}}>
                   <Slider vertical range step={1} defaultValue={[0, 100]}  onAfterChange={
                     (value) => {
                       setRange(value); 

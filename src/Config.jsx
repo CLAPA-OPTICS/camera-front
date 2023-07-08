@@ -3,18 +3,7 @@ import { Select, Slider, Space, Button, Input } from 'antd';
 
 function Config(){
     const [isOpen, setIsOpen] = useState(false);
-    const [isSample, setSample] = useState(false);
-    const [time, setTime] = useState();
-    const sunmit =(
-        <Button type="text" onClick={
-            () => {
-                const url = 'http://127.0.0.1:8000/set_exposure_time/?time=' + time;
-                fetch(url, {method: 'POST'});
-            }
-        }>
-            Submit
-        </Button>
-    );
+    const [time, setTime] = useState(200);
 
     return (
     <>
@@ -31,53 +20,19 @@ function Config(){
             </div>
             <div>
                 <Input addonBefore="曝光时间" defaultValue={200} onChange = {
-                    (value) => {
-                        setTime(value);
+                    (e) => {
+                        setTime(Number(e.target.value));
                     }
                 }></Input>
                 <Input addonBefore="曝光强度" defaultValue={10000}></Input>
             </div>
             <Button type="text" onClick={
                 () => {
-                    const url = 'http://127.0.0.1:8000/set_exposure_time/?time=' + time;
+                    const url = 'http://127.0.0.1:8000/set_exposure_time?time=' + Number(time);
                     fetch(url, {method: 'POST'});
                 }
             }>
                 Submit
-            </Button>
-        </Space>
-        <Space>
-            <Button disabled={isOpen} onClick={
-                () => {
-                    fetch('http://127.0.0.1:8000/start');
-                    setIsOpen(true);
-                }
-            }>
-                click to start
-            </Button>
-            <Button disabled={!isOpen} onClick={
-                () => {
-                    fetch('http://127.0.0.1:8000/close');
-                    setIsOpen(false);
-                }
-            }>
-                click to close
-            </Button>
-            <Button disabled={isSample} onClick={
-                () => {
-                    fetch('http://127.0.0.1:8000/start_sample');
-                    setSample(true);
-                }
-            }>
-                click to start sample
-            </Button>
-            <Button disabled={!isSample} onClick={
-                () => {
-                    fetch('http://127.0.0.1:8000/stop_sample');
-                    setSample(false);
-                }
-            }>
-                click to stop sample
             </Button>
         </Space>
     </>
