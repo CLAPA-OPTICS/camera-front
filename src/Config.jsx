@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Select, Slider, Space, Button, Input } from 'antd';
+import { Select, Space, Button, Input } from 'antd';
 
 function Config(){
-    const [isOpen, setIsOpen] = useState(false);
     const [time, setTime] = useState(200);
 
     return (
