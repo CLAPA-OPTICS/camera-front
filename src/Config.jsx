@@ -2,21 +2,12 @@ import { useState } from 'react';
 import { Select, Space, Button, Input } from 'antd';
 
 function Config(){
+
     const [time, setTime] = useState(200);
 
     return (
     <>
         <Space>
-            <div>
-                <Select defaultValue="colorbar">
-                    <Option value="grey">grey</Option>
-                    <Option value="jet">jet</Option>
-                </Select>
-                <Select defaultValue="8bits">
-                    <Option value="8bits">8 bits</Option>
-                    <Option value="12bits">12 bits</Option>
-                </Select>
-            </div>
             <div>
                 <Input addonBefore="曝光时间" defaultValue={200} onChange = {
                     (e) => {
