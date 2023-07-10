@@ -1,14 +1,31 @@
 import './App.css'
-import { Button } from 'antd';
+import { useState } from 'react';
+import { Button, Input, Space } from 'antd';
 import PlotFigure from './PlotFigure'
 
 function Projection(props){
     const {data, changeData} = props;
-
+    const [ fwhm, setFWHM ] = useState(0.0);
     return (
     <>
         <div className='box2'>
           <h3>ckick to get the 1d projetion</h3>
+          <Space>
+            <Button onClick={
+                    () => {
+                        fetch("http://127.0.0.1:8000/get_fwhm")
+                        .then((response) => response.json())
+                        .then(
+                          (value) => {
+                                console.log(value);
+                                setFWHM(Number(value.width[0]))
+                          }
+                        )
+                    }
+                }>
+                {"get fwhm (pixel): " + fwhm}
+            </Button>
+          </Space>
           <div className="logo">
             <PlotFigure axis="culmen_length_mm" data={data}/>
           </div>
