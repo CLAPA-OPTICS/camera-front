@@ -131,8 +131,8 @@ function Camera(props) {
                                 fetch(url)
                                 .then((response) => response.json())
                                 .then((data) => {
-                                    console.log(data);
-                                    changeData(data);
+                                    console.log(data[0]);
+                                    changeData(data[0]);
                                 })
                                 .catch((err) => {
                                     console.log(err.message);
