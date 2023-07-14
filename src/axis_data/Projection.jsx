@@ -1,7 +1,7 @@
-import './App.css'
+import '../css_file/App.css'
 import { useState, useCallback, useEffect } from 'react';
 import { Button, Input, Space } from 'antd';
-import PlotFigure from './PlotFigure'
+import PlotFigure from '../plot_figure/PlotFigure'
 
 function Projection(props){
     const {data, changeData} = props;

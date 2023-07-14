@@ -1,11 +1,11 @@
-import './App.css'
-import Config from './Config';
-import Camera from './Camera';
+import './css_file/App.css'
+import Config from './configuration/Config';
+import Camera from './image_stream/Camera';
 import { Space, Avatar } from 'antd';
-import Projection from './Projection';
-import Calculation from './Calculation'
+import Projection from './axis_data/Projection';
+import Calculation from './calculation/Calculation'
 import { useState, useCallback } from 'react'
-import Login from './Login';
+import Login from './login/Login';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);

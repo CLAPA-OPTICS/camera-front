@@ -1,5 +1,7 @@
-import { Button, Space, Avatar, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input } from 'antd';
 import { useRef } from 'react';
+import axios from 'axios';
+
 function Login(props) {
 
   const {setIsLogin} = props;
@@ -8,8 +10,24 @@ function Login(props) {
   const formRef = useRef(null);
 
   const onFinish = (values) => {
-    if(values["password"] === "1234"){
+    if(values["password"] === "admin" && values["username"] === "admin"){
       setIsLogin(true);
+    }else{
+      //axios请求
+      axios.post('http://127.0.0.1:8000/token', values)
+      .then((res) =>{
+          //对返回的token进行解构,并存储
+          const {access_token} = res.data;
+          localStorage.setItem('jwToken', access_token);
+      })
+      .catch(err => console.log('Request Failed', err));
+
+      axios.get('http://127.0.0.1:8000/login',{
+        headers: {
+          'Authorization': "Bearer " + localStorage.getItem('jwToken'),
+        }
+      })
+      .then(setIsLogin(true));
     }
     console.log('Success:', values);
   };
@@ -49,11 +67,13 @@ function Login(props) {
         ]}
         onChange = {
           () => {
+            /*
             form.setFieldsValue(
               {
-                password: "1234"
+                password: "admin"
               }
-              )
+            )
+            */
           }
         }
       >

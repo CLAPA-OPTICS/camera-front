@@ -1,4 +1,4 @@
-import './App.css';
+import '../css_file/App.css';
 import {useEffect, useRef} from "react";
 import * as Plot from "@observablehq/plot";
 

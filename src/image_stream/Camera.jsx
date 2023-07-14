@@ -1,4 +1,4 @@
-import './App.css'
+import '../css_file/App.css'
 import { useState } from 'react'
 import { Slider, Select, Space, Button } from 'antd';
 
