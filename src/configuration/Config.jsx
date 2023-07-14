@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Select, Space, Button, Input } from 'antd';
 
-function Config(){
+function Config(props){
 
     //const [time, setTime] = useState(200);
-
+    const { setIsLogin } = props;
     const [gamma, setGamma] = useState(null);
     const [gain, setGain] = useState(null);
     const [contrast, setContrast] = useState(null);
@@ -37,6 +37,7 @@ function Config(){
                     }
                 }></Input>
             </div>
+            <div>
             <Button onClick={
                 () => {
                         fetch('http://127.0.0.1:8000/set_camera_parameters', {
@@ -59,6 +60,15 @@ function Config(){
             }>
                 Set Camera Params
             </Button>
+            <Button onClick={
+                () => {
+                    localStorage.removeItem('jwToken');
+                    setIsLogin(false);
+                }
+            }>
+                Log Out
+            </Button>
+            </div>
         </Space>
     </>
     )

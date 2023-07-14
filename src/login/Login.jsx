@@ -14,20 +14,19 @@ function Login(props) {
       setIsLogin(true);
     }else{
       //axios请求
-      axios.post('http://127.0.0.1:8000/token', values)
+      axios.post('http://127.0.0.1:8000/token', values,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      })
       .then((res) =>{
           //对返回的token进行解构,并存储
           const {access_token} = res.data;
           localStorage.setItem('jwToken', access_token);
+          setIsLogin(true);
       })
       .catch(err => console.log('Request Failed', err));
-
-      axios.get('http://127.0.0.1:8000/login',{
-        headers: {
-          'Authorization': "Bearer " + localStorage.getItem('jwToken'),
-        }
-      })
-      .then(setIsLogin(true));
     }
     console.log('Success:', values);
   };

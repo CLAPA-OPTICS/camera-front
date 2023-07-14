@@ -1,10 +1,11 @@
 import './css_file/App.css'
+import axios from 'axios';
 import Config from './configuration/Config';
 import Camera from './image_stream/Camera';
 import { Space, Avatar } from 'antd';
 import Projection from './axis_data/Projection';
 import Calculation from './calculation/Calculation'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import Login from './login/Login';
 
 function App() {
@@ -14,6 +15,18 @@ function App() {
   const changeData = useCallback((data) => setData(data), []);
   const changeRange = useCallback((range) => setRange(range), []);
   const changeIsLogin = useCallback((data) => setIsLogin(data), []);
+  const checkLogin = () => {
+    axios.get('http://127.0.0.1:8000/login',{
+      headers: {
+        'Authorization': "Bearer " + localStorage.getItem('jwToken'),
+      }
+    })
+    .then(()=>{
+      //console.log(localStorage.getItem('jwToken'));
+      setIsLogin(true);
+    })
+  };
+  useEffect(checkLogin, []);
   return (
     <>
       {isLogin === false ?
@@ -31,7 +44,7 @@ function App() {
             <h3>CLAPA-OPTICS Camera software</h3>
           </Space>
           <div className='wrapper'>
-            <Config />
+            <Config setIsLogin={changeIsLogin}/>
           </div>
           <div className='wrapper'>
             <Camera range={range} changeData={changeData} changeRange={changeRange} />
